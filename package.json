@@ -9,7 +9,17 @@
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
     "preview": "vite preview",
-    "seed": "tsx scripts/seed.ts"
+    "seed": "tsx scripts/seed.ts",
+    "seed:realistic": "tsx scripts/generate-synthetic-data.ts realistic 50 30",
+    "seed:stress": "tsx scripts/generate-synthetic-data.ts stress-test 200 30",
+    "seed:edge-cases": "tsx scripts/generate-synthetic-data.ts edge-cases 100 30",
+    "seed:performance": "tsx scripts/generate-synthetic-data.ts performance-test 100 7",
+    "seed:bulk": "tsx scripts/bulk-generate.ts 1000 100 30",
+    "seed:bulk-large": "tsx scripts/bulk-generate.ts 10000 500 90",
+    "cleanup": "tsx scripts/cleanup.ts",
+    "cleanup:stats": "tsx scripts/cleanup.ts stats",
+    "cleanup:old": "tsx scripts/cleanup.ts cleanup 7 100",
+    "cleanup:reset": "tsx scripts/cleanup.ts reset-all --dry-run"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",

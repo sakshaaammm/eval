@@ -85,10 +85,9 @@ Endpoint: `supabase/functions/ingest-eval`
 
 Seeding Sample Data
 -------------------
-Option A: SQL-based function (migration `20251017111016_...`)
-This migration defines `public.generate_sample_evaluations()` and calls it. It targets the first user in `auth.users` and inserts 50 randomized rows.
+The app provides multiple options for generating synthetic data for testing and development:
 
-Option B: TypeScript seed script (recommended for local/dev)
+### Basic Seeding
 ```bash
 # Ensure .env has SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY
 npm run seed
@@ -96,6 +95,63 @@ npm run seed
 The script `scripts/seed.ts`:
 - Uses service role to list users and target the first one
 - Inserts 50 `evaluations` across the last 30 days with varied scores/latency/flags
+
+### Advanced Synthetic Data Generation
+```bash
+# Realistic data (50 records, 30 days)
+npm run seed:realistic
+
+# Stress testing data (200 records with edge cases)
+npm run seed:stress
+
+# Edge cases testing (100 records with problematic data)
+npm run seed:edge-cases
+
+# Performance testing (100 records, 7 days, high scores)
+npm run seed:performance
+```
+
+### Bulk Data Generation
+```bash
+# Generate 1000 records in batches of 100
+npm run seed:bulk
+
+# Generate 10000 records in batches of 500 (for performance testing)
+npm run seed:bulk-large
+```
+
+### Data Cleanup
+```bash
+# Show database statistics
+npm run cleanup:stats
+
+# Clean up old data (older than 7 days, keep 100 newest)
+npm run cleanup:old
+
+# Preview reset all data (dry run)
+npm run cleanup:reset
+
+# Actually reset all data
+npm run cleanup reset-all
+```
+
+### Custom Data Generation
+```bash
+# Generate custom amounts with specific scenarios
+tsx scripts/generate-synthetic-data.ts <scenario> <count> <days>
+tsx scripts/bulk-generate.ts <total-count> <batch-size> <days>
+tsx scripts/cleanup.ts <command> [options]
+```
+
+### Available Scenarios
+- `realistic`: Normal distribution with high-quality data
+- `stress-test`: Wide range of values for stress testing
+- `edge-cases`: Problematic data for edge case testing
+- `performance-test`: High-quality data for performance testing
+
+### SQL-based Seeding (Legacy)
+Option A: SQL-based function (migration `20251017111016_...`)
+This migration defines `public.generate_sample_evaluations()` and calls it. It targets the first user in `auth.users` and inserts 50 randomized rows.
 
 Deployment
 ----------
